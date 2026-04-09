@@ -9,9 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +24,7 @@ jobs:
       - name: Execute
         env:
           X_TOKEN: ${{ secrets.X_TOKEN }}
+          LAST_PUBLISHED_URL: ${{ vars.LAST_PUBLISHED_URL }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: python publish.py
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5

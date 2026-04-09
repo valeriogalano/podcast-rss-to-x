@@ -5,10 +5,10 @@ import xml.etree.ElementTree as ET
 
 import requests
 
+from github_state import update_github_variable
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("twitter")
-
-PUBLISHED_FILE = './published_episodes.txt'
 
 
 def fetch_last_episode(feed_url: str) -> dict:
@@ -31,16 +31,12 @@ def fetch_last_episode(feed_url: str) -> dict:
 
 
 def is_published(link: str) -> bool:
-    if not os.path.exists(PUBLISHED_FILE):
-        return False
-    with open(PUBLISHED_FILE, 'r') as f:
-        return link in f.read()
+    return link == os.environ.get('LAST_PUBLISHED_URL', '')
 
 
 def mark_as_published(link: str) -> None:
-    logger.info(f"Segnato come pubblicato: {link}")
-    with open(PUBLISHED_FILE, 'a') as f:
-        f.write(f"{link}\n")
+    logger.info(f"Aggiornamento stato: {link}")
+    update_github_variable('LAST_PUBLISHED_URL', link)
 
 
 def publish_to_x(episode: dict, token: str) -> None:
