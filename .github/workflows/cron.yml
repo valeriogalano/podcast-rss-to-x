@@ -8,21 +8,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: write
-    
+
     steps:
-      - name: Checkout 
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          php-version: '8.3'
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Execute
-        run: php ./publish.php ${{ secrets.X_TOKEN }}
+        env:
+          X_TOKEN: ${{ secrets.X_TOKEN }}
+        run: python publish.py
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
