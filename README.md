@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://cdn.pensieriincodice.it/images/pensieriincodice-locandina.png" alt="Logo Progetto" width="150"/>
-  <h1>Pensieri In Codice — Episode to X</h1>
+  <h1>Pensieri in codice — Episode to X</h1>
   <p>GitHub Action che pubblica automaticamente i nuovi episodi del podcast su X (Twitter).</p>
   <p>
     <img src="https://img.shields.io/github/stars/valeriogalano/pensieriincodice-episode-to-x?style=for-the-badge" alt="GitHub Stars"/>
