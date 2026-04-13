@@ -22,8 +22,8 @@ Il workflow controlla il feed RSS del podcast e pubblica i nuovi episodi sull'ac
 
 ## Requisiti
 
-- Un account X con applicazione OAuth configurata (API v2)
-- Uno o più feed RSS di podcast
+- Un account X con applicazione configurata per le API v2 (Bearer token)
+- Un feed RSS del podcast
 
 ---
 
@@ -38,14 +38,11 @@ cd pensieriincodice-episode-to-x
 
 ### 2. Configura i secrets di GitHub Actions
 
-In **Settings → Secrets and variables → Actions**, aggiungi i seguenti **Secrets**:
+In **Settings → Secrets and variables → Actions**, aggiungi il seguente **Secret**:
 
 | Secret | Descrizione |
 |---|---|
-| `X_API_KEY` | API Key dell'applicazione X |
-| `X_API_SECRET` | API Secret dell'applicazione X |
-| `X_ACCESS_TOKEN` | Access Token dell'account X |
-| `X_ACCESS_TOKEN_SECRET` | Access Token Secret dell'account X |
+| `X_TOKEN` | Bearer token dell'applicazione X (API v2) |
 
 ### 3. Configura le variabili di GitHub Actions
 
@@ -53,19 +50,27 @@ Nella stessa sezione, sotto la scheda **Variables**, aggiungi:
 
 | Variabile | Descrizione |
 |---|---|
-| `PODCAST1_RSS_URL` | URL del feed RSS del primo podcast |
-| `PODCAST1_TEMPLATE` | Template del messaggio per il primo podcast |
+| `PODCAST_RSS_URL` | URL del feed RSS del podcast (default: `https://pensieriincodice.it/podcast/index.xml`) |
 
-### 4. Template del messaggio
+### 4. Formato del messaggio
 
-I placeholder disponibili sono `{title}` e `{link}`. Tieni presente il limite di 280 caratteri per i post su X. Esempio:
+Il messaggio pubblicato ha un formato fisso (non configurabile tramite template):
 
 ```
-🎙️ Nuovo episodio: {title}
+🎙️ Nuovo episodio:
+{titolo episodio}
+{link episodio}
+```
 
-Ascoltalo qui: {link}
+Tieni presente il limite di 280 caratteri per i post su X.
 
-#Podcast #Tech
+### 5. Sviluppo locale (opzionale)
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # macOS/Linux
+# .venv\Scripts\activate   # Windows
+pip install -r requirements.txt
 ```
 
 ---
